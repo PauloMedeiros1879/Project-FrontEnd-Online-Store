@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getCategories } from '../../services/api';
+import { getCategories, getProductsFromQuery } from '../../services/api';
+import Product from '../Product/Product';
 
 class Home extends Component {
   constructor() {
     super();
     this.state = {
       categories: [],
+      querySearch: '',
+      products: [],
     };
   }
 
@@ -21,14 +24,53 @@ class Home extends Component {
     });
   };
 
+  fetchProducts = async () => {
+    const { querySearch } = this.state;
+    const productsObj = await getProductsFromQuery(querySearch);
+    console.log(productsObj);
+    this.setState({
+      products: productsObj,
+    });
+  };
+
+  handleChange = ({ target }) => {
+    const { value, name } = target;
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  handleClick = () => {
+    this.fetchProducts();
+  };
+
+  renderProducts = () => {
+    const { products } = this.state;
+    return products.map(({ id, title, price, thumbnail }) => (
+      <div key={ id } data-testid="product">
+        <Product id={ id } title={ title } price={ price } thumbnail={ thumbnail } />
+      </div>
+    ));
+  };
+
   render() {
-    const { categories } = this.state;
+    const { categories, querySearch, products } = this.state;
     return (
       <div>
-        <label htmlFor="seach" data-testid="home-initial-message">
-          <input type="text" name="seach" id="seach" />
+        <label htmlFor="querySearch" data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
+          <input
+            onChange={ this.handleChange }
+            type="text"
+            name="querySearch"
+            id="querySearch"
+            value={ querySearch }
+            data-testid="query-input"
+          />
         </label>
+        <button type="button" data-testid="query-button" onClick={ this.handleClick }>
+          Pesquisar
+        </button>
         <Link to="/shopping-cart" data-testid="shopping-cart-button">
           Carrinho De Compras
         </Link>
@@ -39,6 +81,11 @@ class Home extends Component {
             </li>
           ))}
         </ul>
+        {products.length > 0 ? (
+          this.renderProducts()
+        ) : (
+          <p>Nenhum Produto foi Encontrado</p>
+        )}
       </div>
     );
   }
