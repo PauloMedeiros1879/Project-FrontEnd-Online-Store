@@ -54,13 +54,6 @@ class HomePage extends Component {
     this.setState({ products: productsObj, searchMade: true });
   };
 
-  // activateCategorieFilter = ({ target }) => {
-  //   const { id } = target;
-  //   this.setState({ filterId: id }, () => {
-  //     this.searchWithFilter();
-  //   });
-  // };
-
   renderProducts = () => {
     const { products } = this.state;
     if (!products) return <Loading />;
