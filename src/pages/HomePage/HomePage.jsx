@@ -4,6 +4,7 @@ import {
   getCategories,
   getProductsFromQuery,
   getProductsFromCategory,
+  getProductById,
 } from '../../services/api';
 import './HomePage.css';
 import Product from '../Product';
@@ -16,7 +17,9 @@ class HomePage extends Component {
       categories: [],
       querySearch: '',
       products: [],
+      product: [],
       searchMade: false,
+      productClicked: false,
     };
   }
 
@@ -63,6 +66,12 @@ class HomePage extends Component {
     return products.map(({ id, title, price, thumbnail }) => (
       <div key={ id } data-testid="product">
         <Product id={ id } title={ title } price={ price } thumbnail={ thumbnail } />
+        <Link
+          to={ `/product/${id}` }
+          data-testid="product-detail-link"
+        >
+          Ver detalhes do produto
+        </Link>
       </div>
     ));
   };
