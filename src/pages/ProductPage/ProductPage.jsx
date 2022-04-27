@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Product from '../Product/Product';
 import { getProductById } from '../../services/api';
 
@@ -28,15 +29,20 @@ class ProductPage extends React.Component {
 
   render() {
     const { product } = this.state;
-    const { title, price, thumbnail } = product;
+    const { title, price, thumbnail, id } = product;
     return (
       <div>
         <Product
+          id={ id }
           title={ title }
           price={ price }
           thumbnail={ thumbnail }
           datatest="product-detail-name"
+          whoCalls="ProductPage"
         />
+        <Link to="/shopping-cart" data-testid="shopping-cart-button">
+          Carrinho De Compras
+        </Link>
       </div>
     );
   }
