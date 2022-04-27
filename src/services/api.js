@@ -1,19 +1,52 @@
-export async function getCategories() {
+async function getCategories() {
   try {
-    const api = await fetch('https://api.mercadolibre.com/sites/MLB/categories');
-    const categories = await api.json();
+    const response = await fetch('https://api.mercadolibre.com/sites/MLB/categories');
+    const categories = await response.json();
     return categories;
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function getProductsFromCategoryAndQuery(categoryId, query) {
+async function getProductsFromCategoryAndQuery(CATEGORY_ID, QUERY) {
   try {
-    const api = await fetch(`https://api.mercadolibre.com/sites/MLB/search?category=${categoryId}&q=${query}`);
-    const catAndQuery = await api.json();
-    return catAndQuery;
+    const response = await fetch(
+      `https://api.mercadolibre.com/sites/MLB/search?category=${CATEGORY_ID}&q=${QUERY}`,
+    );
+    const products = await response.json();
+    return products;
   } catch (error) {
     console.log(error);
   }
 }
+
+async function getProductsFromCategory(CATEGORY_ID) {
+  try {
+    const response = await fetch(
+      `https://api.mercadolibre.com/sites/MLB/search?category=${CATEGORY_ID}`,
+    );
+    const products = await response.json();
+    return products.results;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getProductsFromQuery(QUERY) {
+  try {
+    const response = await fetch(
+      `https://api.mercadolibre.com/sites/MLB/search?q=${QUERY}`,
+    );
+    const products = await response.json();
+    return products.results;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export {
+  getCategories,
+  getProductsFromCategoryAndQuery,
+  getProductsFromQuery,
+  getProductsFromCategory,
+};

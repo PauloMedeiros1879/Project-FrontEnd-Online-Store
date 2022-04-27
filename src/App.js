@@ -1,14 +1,20 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Route } from 'react-router-dom';
-import PageMaster from './pages/PageMaster';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Home from './pages/HomePage';
+import ShoppingCart from './pages/ShoppingCart';
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Route exact path="/" component={ PageMaster } />
-    </BrowserRouter>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/shopping-cart" component={ ShoppingCart } />
+          <Route exact path="/" component={ Home } />
+        </Switch>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;
