@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategories, getProductsFromQuery } from '../../services/api';
 import Product from '../Product';
+import Loading from '../../Components/Loading';
 
 class HomePage extends Component {
   constructor() {
@@ -10,6 +11,7 @@ class HomePage extends Component {
       categories: [],
       querySearch: '',
       products: [],
+      searchMade: false,
     };
   }
 
@@ -27,10 +29,7 @@ class HomePage extends Component {
   fetchProducts = async () => {
     const { querySearch } = this.state;
     const productsObj = await getProductsFromQuery(querySearch);
-    console.log(productsObj);
-    this.setState({
-      products: productsObj,
-    });
+    this.setState({ products: productsObj, searchMade: true });
   };
 
   handleChange = ({ target }) => {
@@ -46,6 +45,10 @@ class HomePage extends Component {
 
   renderProducts = () => {
     const { products } = this.state;
+    if (!products) return <Loading />;
+
+    if (products.length === 0) return <p>Nenhum Produto foi Encontrado</p>;
+
     return products.map(({ id, title, price, thumbnail }) => (
       <div key={ id } data-testid="product">
         <Product id={ id } title={ title } price={ price } thumbnail={ thumbnail } />
@@ -53,12 +56,27 @@ class HomePage extends Component {
     ));
   };
 
+  renderCategories = () => {
+    const { categories } = this.state;
+    if (!categories) return <Loading />;
+
+    return categories.map(({ name }, i) => (
+      <li key={ i } data-testid="category">
+        {name}
+      </li>
+    ));
+  };
+
   render() {
-    const { categories, querySearch, products } = this.state;
+    const { querySearch, searchMade } = this.state;
     return (
-      <div>
-        <label htmlFor="querySearch" data-testid="home-initial-message">
-          Digite algum termo de pesquisa ou escolha uma categoria.
+      <section className="home_section">
+        <header className="home_header">
+          {!searchMade && (
+            <h2 data-testid="home-initial-message">
+              Digite algum termo de pesquisa ou escolha uma categoria.
+            </h2>
+          )}
           <input
             onChange={ this.handleChange }
             type="text"
@@ -67,26 +85,18 @@ class HomePage extends Component {
             value={ querySearch }
             data-testid="query-input"
           />
-        </label>
-        <button type="button" data-testid="query-button" onClick={ this.handleClick }>
-          Pesquisar
-        </button>
-        <Link to="/shopping-cart" data-testid="shopping-cart-button">
-          Carrinho De Compras
-        </Link>
-        <ul className="categories">
-          {categories.map(({ name }, i) => (
-            <li key={ i } data-testid="category">
-              {name}
-            </li>
-          ))}
-        </ul>
-        {products.length > 0 ? (
-          this.renderProducts()
-        ) : (
-          <p>Nenhum Produto foi Encontrado</p>
-        )}
-      </div>
+          <button type="button" data-testid="query-button" onClick={ this.handleClick }>
+            Pesquisar
+          </button>
+          <Link to="/shopping-cart" data-testid="shopping-cart-button">
+            Carrinho De Compras
+          </Link>
+        </header>
+        <ul className="categories">{this.renderCategories()}</ul>
+        <section className="products_section">
+          {searchMade && this.renderProducts()}
+        </section>
+      </section>
     );
   }
 }
