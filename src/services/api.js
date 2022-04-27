@@ -46,11 +46,8 @@ async function getProductsFromQuery(QUERY) {
 
 async function getProductById(PRODUCT_ID) {
   try {
-    const response = await fetch(
-      `https://api.mercadolibre.com/items/${PRODUCT_ID}`,
-    );
+    const response = await fetch(`https://api.mercadolibre.com/items/${PRODUCT_ID}`);
     const product = await response.json();
-    console.log(product);
     return product;
   } catch (error) {
     console.log(error);
