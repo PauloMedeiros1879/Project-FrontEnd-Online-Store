@@ -3,21 +3,29 @@ import PropTypes from 'prop-types';
 
 class Product extends Component {
   render() {
-    const { title, thumbnail, price } = this.props;
+    const { title, thumbnail, price, datatest } = this.props;
     return (
-      <>
-        <h2>{title}</h2>
+      <div>
+        {datatest ? <h2 data-testid={ datatest }>{title}</h2> : <h2>{title}</h2>}
         <img src={ thumbnail } alt={ title } />
         <p>{price}</p>
-      </>
+      </div>
     );
   }
 }
 
 Product.propTypes = {
-  title: PropTypes.string.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  title: PropTypes.string,
+  thumbnail: PropTypes.string,
+  price: PropTypes.number,
+  datatest: PropTypes.string,
+};
+
+Product.defaultProps = {
+  datatest: '',
+  title: undefined,
+  thumbnail: undefined,
+  price: undefined,
 };
 
 export default Product;
