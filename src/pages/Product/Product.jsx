@@ -5,11 +5,11 @@ class Product extends Component {
   render() {
     const { title, thumbnail, price } = this.props;
     return (
-      <div>
+      <>
         <h2>{title}</h2>
         <img src={ thumbnail } alt={ title } />
         <p>{price}</p>
-      </div>
+      </>
     );
   }
 }

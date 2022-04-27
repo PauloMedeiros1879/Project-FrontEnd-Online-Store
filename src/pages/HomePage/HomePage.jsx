@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getCategories, getProductsFromQuery } from '../../services/api';
+import {
+  getCategories,
+  getProductsFromQuery,
+  getProductsFromCategory,
+  getProductsFromCategoryAndQuery,
+} from '../../services/api';
+import './HomePage.css';
 import Product from '../Product';
 import Loading from '../../Components/Loading';
 
@@ -27,20 +33,41 @@ class HomePage extends Component {
   };
 
   fetchProducts = async () => {
-    const { querySearch } = this.state;
+    const { querySearch, filter } = this.state;
+    if (filter) {
+      this.searchWithFilter();
+      return;
+    }
     const productsObj = await getProductsFromQuery(querySearch);
     this.setState({ products: productsObj, searchMade: true });
   };
 
-  handleChange = ({ target }) => {
+  handleInputChange = ({ target }) => {
     const { value, name } = target;
     this.setState({
       [name]: value,
     });
   };
 
-  handleClick = () => {
+  handleSearchClick = () => {
     this.fetchProducts();
+  };
+
+  searchWithFilter = async () => {
+    const { filter, querySearch } = this.state;
+    const productsObj = await getProductsFromCategoryAndQuery(filter, querySearch);
+    this.setState({ products: productsObj, searchMade: true });
+  };
+
+  activateCategorieFilter = ({ target }) => {
+    const { categories } = this.state;
+    const categorieIdToFilter = categories.find(
+      ({ name }) => name === target.textContent,
+    ).id;
+
+    this.setState({ filter: categorieIdToFilter }, () => {
+      this.searchWithFilter();
+    });
   };
 
   renderProducts = () => {
@@ -62,7 +89,13 @@ class HomePage extends Component {
 
     return categories.map(({ name }, i) => (
       <li key={ i } data-testid="category">
-        {name}
+        <button
+          type="button"
+          className="btn_categories"
+          onClick={ this.activateCategorieFilter }
+        >
+          {name}
+        </button>
       </li>
     ));
   };
@@ -78,14 +111,18 @@ class HomePage extends Component {
             </h2>
           )}
           <input
-            onChange={ this.handleChange }
+            onChange={ this.handleInputChange }
             type="text"
             name="querySearch"
             id="querySearch"
             value={ querySearch }
             data-testid="query-input"
           />
-          <button type="button" data-testid="query-button" onClick={ this.handleClick }>
+          <button
+            type="button"
+            data-testid="query-button"
+            onClick={ this.handleSearchClick }
+          >
             Pesquisar
           </button>
           <Link to="/shopping-cart" data-testid="shopping-cart-button">

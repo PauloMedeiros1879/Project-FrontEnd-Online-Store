@@ -1,0 +1,9 @@
+.btn_categories {
+  background: none;
+  border: none;
+}
+
+.btn_categories:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
