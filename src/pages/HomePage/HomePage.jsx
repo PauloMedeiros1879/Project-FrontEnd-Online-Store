@@ -4,7 +4,6 @@ import {
   getCategories,
   getProductsFromQuery,
   getProductsFromCategory,
-  getProductsFromCategoryAndQuery,
 } from '../../services/api';
 import './HomePage.css';
 import Product from '../Product';
@@ -33,11 +32,7 @@ class HomePage extends Component {
   };
 
   fetchProducts = async () => {
-    const { querySearch, filter } = this.state;
-    if (filter) {
-      this.searchWithFilter();
-      return;
-    }
+    const { querySearch } = this.state;
     const productsObj = await getProductsFromQuery(querySearch);
     this.setState({ products: productsObj, searchMade: true });
   };
@@ -53,22 +48,18 @@ class HomePage extends Component {
     this.fetchProducts();
   };
 
-  searchWithFilter = async () => {
-    const { filter, querySearch } = this.state;
-    const productsObj = await getProductsFromCategoryAndQuery(filter, querySearch);
+  searchByCategory = async ({ target }) => {
+    const { id } = target;
+    const productsObj = await getProductsFromCategory(id);
     this.setState({ products: productsObj, searchMade: true });
   };
 
-  activateCategorieFilter = ({ target }) => {
-    const { categories } = this.state;
-    const categorieIdToFilter = categories.find(
-      ({ name }) => name === target.textContent,
-    ).id;
-
-    this.setState({ filter: categorieIdToFilter }, () => {
-      this.searchWithFilter();
-    });
-  };
+  // activateCategorieFilter = ({ target }) => {
+  //   const { id } = target;
+  //   this.setState({ filterId: id }, () => {
+  //     this.searchWithFilter();
+  //   });
+  // };
 
   renderProducts = () => {
     const { products } = this.state;
@@ -87,12 +78,14 @@ class HomePage extends Component {
     const { categories } = this.state;
     if (!categories) return <Loading />;
 
-    return categories.map(({ name }, i) => (
-      <li key={ i } data-testid="category">
+    return categories.map(({ name, id }, i) => (
+      <li key={ i }>
         <button
+          id={ id }
+          data-testid="category"
           type="button"
           className="btn_categories"
-          onClick={ this.activateCategorieFilter }
+          onClick={ this.searchByCategory }
         >
           {name}
         </button>
