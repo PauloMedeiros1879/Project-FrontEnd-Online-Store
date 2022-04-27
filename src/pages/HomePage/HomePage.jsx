@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategories, getProductsFromQuery } from '../../services/api';
-import Product from '../Product/Product';
+import Product from '../Product';
 
-class Home extends Component {
+class HomePage extends Component {
   constructor() {
     super();
     this.state = {
@@ -91,4 +91,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default HomePage;
