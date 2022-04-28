@@ -62,6 +62,7 @@ class Home extends Component {
 
     if (products.length === 0) return <p>Nenhum Produto foi Encontrado</p>;
 
+<<<<<<< HEAD:src/pages/Home/Home.jsx
     return products.map((product) => (
       <div key={ product.id } data-testid="product">
         <Product
@@ -73,6 +74,18 @@ class Home extends Component {
           homeCall="home"
         />
         <Link to={ `/product/${product.id}` } data-testid="product-detail-link">
+=======
+    return products.map(({ id, title, price, thumbnail }) => (
+      <div key={ id } data-testid="product">
+        <Product
+          id={ id }
+          title={ title }
+          price={ price }
+          thumbnail={ thumbnail }
+          whoCalls="HomePage"
+        />
+        <Link to={ `/product/${id}` } data-testid="product-detail-link">
+>>>>>>> ccc22ca2cee4199220ca6eb1bcac97d83bbf1b90:src/pages/HomePage/HomePage.jsx
           Ver detalhes do produto
         </Link>
       </div>
