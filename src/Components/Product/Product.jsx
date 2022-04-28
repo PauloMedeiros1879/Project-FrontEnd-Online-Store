@@ -24,18 +24,22 @@ class Product extends Component {
 }
 
 Product.propTypes = {
-  title: PropTypes.string.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  title: PropTypes.string,
+  thumbnail: PropTypes.string,
+  price: PropTypes.number,
   datatest: PropTypes.string,
   addToCart: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   homeCall: PropTypes.string,
 };
 
 Product.defaultProps = {
   datatest: undefined,
   homeCall: undefined,
+  title: undefined,
+  thumbnail: undefined,
+  price: undefined,
+  id: undefined,
 };
 
 export default Product;
