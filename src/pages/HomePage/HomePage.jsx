@@ -62,7 +62,16 @@ class HomePage extends Component {
 
     return products.map(({ id, title, price, thumbnail }) => (
       <div key={ id } data-testid="product">
-        <Product id={ id } title={ title } price={ price } thumbnail={ thumbnail } />
+        <Product
+          id={ id }
+          title={ title }
+          price={ price }
+          thumbnail={ thumbnail }
+          whoCalls="HomePage"
+        />
+        <Link to={ `/product/${id}` } data-testid="product-detail-link">
+          Ver detalhes do produto
+        </Link>
       </div>
     ));
   };
