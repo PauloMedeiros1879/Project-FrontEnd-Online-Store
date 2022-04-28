@@ -1,11 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-<<<<<<< HEAD:src/pages/ProductDetails/ProductDetails.jsx
 import Product from '../../Components/Product/Product';
-=======
-import Product from '../Product/Product';
->>>>>>> ccc22ca2cee4199220ca6eb1bcac97d83bbf1b90:src/pages/ProductPage/ProductPage.jsx
 import { getProductById } from '../../services/api';
 
 class ProductDetails extends React.Component {
@@ -34,10 +30,7 @@ class ProductDetails extends React.Component {
   render() {
     const { product } = this.state;
     const { title, price, thumbnail, id } = product;
-<<<<<<< HEAD:src/pages/ProductDetails/ProductDetails.jsx
     const { addToCart } = this.props;
-=======
->>>>>>> ccc22ca2cee4199220ca6eb1bcac97d83bbf1b90:src/pages/ProductPage/ProductPage.jsx
     return (
       <div>
         <Product
@@ -45,7 +38,6 @@ class ProductDetails extends React.Component {
           title={ title }
           price={ price }
           addToCart={ addToCart }
-          id={ id }
           thumbnail={ thumbnail }
           datatest="product-detail-name"
           whoCalls="ProductPage"
