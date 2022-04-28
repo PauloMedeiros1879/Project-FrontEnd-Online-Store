@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {
   getCategories,
   getProductsFromQuery,
   getProductsFromCategory,
 } from '../../services/api';
-import './HomePage.css';
-import Product from '../Product';
+import './Home.css';
+import Product from '../../Components/Product';
 import Loading from '../../Components/Loading';
 
-class HomePage extends Component {
+class Home extends Component {
   constructor() {
     super();
     this.state = {
@@ -56,13 +57,24 @@ class HomePage extends Component {
 
   renderProducts = () => {
     const { products } = this.state;
+    const { addToCart } = this.props;
     if (!products) return <Loading />;
 
     if (products.length === 0) return <p>Nenhum Produto foi Encontrado</p>;
 
-    return products.map(({ id, title, price, thumbnail }) => (
-      <div key={ id } data-testid="product">
-        <Product id={ id } title={ title } price={ price } thumbnail={ thumbnail } />
+    return products.map((product) => (
+      <div key={ product.id } data-testid="product">
+        <Product
+          id={ product.id }
+          title={ product.title }
+          price={ product.price }
+          thumbnail={ product.thumbnail }
+          addToCart={ addToCart }
+          homeCall="home"
+        />
+        <Link to={ `/product/${product.id}` } data-testid="product-detail-link">
+          Ver detalhes do produto
+        </Link>
       </div>
     ));
   };
@@ -87,7 +99,7 @@ class HomePage extends Component {
   };
 
   render() {
-    const { querySearch, searchMade } = this.state;
+    const { querySearch, searchMade, cartProducts } = this.state;
     return (
       <section className="home_section">
         <header className="home_header">
@@ -111,7 +123,13 @@ class HomePage extends Component {
           >
             Pesquisar
           </button>
-          <Link to="/shopping-cart" data-testid="shopping-cart-button">
+          <Link
+            to={ {
+              pathname: '/shopping-cart',
+              state: { cartProducts },
+            } }
+            data-testid="shopping-cart-button"
+          >
             Carrinho De Compras
           </Link>
         </header>
@@ -124,4 +142,8 @@ class HomePage extends Component {
   }
 }
 
-export default HomePage;
+Home.propTypes = {
+  addToCart: PropTypes.func.isRequired,
+};
+
+export default Home;
