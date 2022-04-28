@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Product from '../Product/Product';
+import { Link } from 'react-router-dom';
+import Product from '../../Components/Product/Product';
 import { getProductById } from '../../services/api';
 
-class ProductPage extends React.Component {
+class ProductDetails extends React.Component {
   constructor() {
     super();
 
@@ -28,26 +29,33 @@ class ProductPage extends React.Component {
 
   render() {
     const { product } = this.state;
-    const { title, price, thumbnail } = product;
+    const { title, price, thumbnail, id } = product;
+    const { addToCart } = this.props;
     return (
       <div>
         <Product
           title={ title }
           price={ price }
+          addToCart={ addToCart }
+          id={ id }
           thumbnail={ thumbnail }
           datatest="product-detail-name"
         />
+        <Link to="/shopping-cart" data-testid="shopping-cart-button">
+          Carrinho De Compras
+        </Link>
       </div>
     );
   }
 }
 
-ProductPage.propTypes = {
+ProductDetails.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  addToCart: PropTypes.func.isRequired,
 };
 
-export default ProductPage;
+export default ProductDetails;
