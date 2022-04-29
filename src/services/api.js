@@ -1,7 +1,7 @@
 async function getCategories() {
   try {
     const response = await fetch('https://api.mercadolibre.com/sites/MLB/categories');
-    const categories = await response.json();
+    const categories = response.json();
     return categories;
   } catch (error) {
     console.log(error);
@@ -10,30 +10,14 @@ async function getCategories() {
 
 async function getProductsFromCategoryAndQuery(CATEGORY_ID, QUERY) {
   try {
-    const response = await fetch(
-      `https://api.mercadolibre.com/sites/MLB/search?category=${CATEGORY_ID}&q=${QUERY}`,
-    );
-    const products = await response.json();
-    return products;
-  } catch (error) {
-    console.log(error);
-  }
-}
+    if (!QUERY) {
+      const response = await fetch(
+        `https://api.mercadolibre.com/sites/MLB/search?category=${CATEGORY_ID}`,
+      );
+      const products = await response.json();
+      return products.results;
+    }
 
-async function getProductsFromCategory(CATEGORY_ID) {
-  try {
-    const response = await fetch(
-      `https://api.mercadolibre.com/sites/MLB/search?category=${CATEGORY_ID}`,
-    );
-    const products = await response.json();
-    return products.results;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-async function getProductsFromQuery(QUERY) {
-  try {
     const response = await fetch(
       `https://api.mercadolibre.com/sites/MLB/search?q=${QUERY}`,
     );
@@ -46,18 +30,12 @@ async function getProductsFromQuery(QUERY) {
 
 async function getProductById(PRODUCT_ID) {
   try {
-    const response = await fetch(`https://api.mercadolibre.com/items/${PRODUCT_ID}`);
-    const product = await response.json();
+    const response = await fetch(` https://api.mercadolibre.com/items/${PRODUCT_ID}`);
+    const product = response.json();
     return product;
   } catch (error) {
     console.log(error);
   }
 }
 
-export {
-  getCategories,
-  getProductsFromCategoryAndQuery,
-  getProductsFromQuery,
-  getProductsFromCategory,
-  getProductById,
-};
+export { getProductsFromCategoryAndQuery, getCategories, getProductById };

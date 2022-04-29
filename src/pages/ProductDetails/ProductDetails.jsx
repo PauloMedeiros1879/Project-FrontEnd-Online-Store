@@ -1,51 +1,55 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Product from '../../Components/Product/Product';
 import { getProductById } from '../../services/api';
+import ProductInfo from '../../Components/ProductInfo';
+import { ReactComponent as CartSVG } from '../../images/cart.svg';
+import { ReactComponent as HomeSVG } from '../../images/home.svg';
 
-class ProductDetails extends React.Component {
+class ProductDetails extends Component {
   constructor() {
     super();
-
     this.state = {
-      product: '',
+      product: undefined,
     };
   }
 
   componentDidMount() {
-    this.getProduct();
+    this.fetchProduct();
   }
 
-  getProduct = async () => {
-    const {
-      match: {
-        params: { id },
-      },
-    } = this.props;
+  fetchProduct = async () => {
+    const { match } = this.props;
+    const { params } = match;
+    const { id } = params;
     const product = await getProductById(id);
     this.setState({ product });
   };
 
   render() {
     const { product } = this.state;
-    const { title, price, thumbnail, id } = product;
-    const { addToCart } = this.props;
+    if (!product) return null;
+    const { id, thumbnail, title, price, attributes } = product;
     return (
-      <div>
-        <Product
-          id={ id }
-          title={ title }
-          price={ price }
-          addToCart={ addToCart }
-          thumbnail={ thumbnail }
-          datatest="product-detail-name"
-          whoCalls="ProductPage"
-        />
-        <Link to="/shopping-cart" data-testid="shopping-cart-button">
-          Carrinho De Compras
-        </Link>
-      </div>
+      <section className="product_details_page">
+        <header>
+          <Link to="/" className="link_home">
+            <HomeSVG className="cart_img_products_details" />
+          </Link>
+          <Link to="/cart" data-testid="shopping-cart-button" className="link_cart">
+            <CartSVG className="cart_img_products_details" />
+          </Link>
+        </header>
+        {product && (
+          <ProductInfo
+            id={ id }
+            thumbnail={ thumbnail }
+            title={ title }
+            price={ price }
+            attributes={ attributes }
+          />
+        )}
+      </section>
     );
   }
 }
@@ -56,7 +60,6 @@ ProductDetails.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  addToCart: PropTypes.func.isRequired,
 };
 
 export default ProductDetails;

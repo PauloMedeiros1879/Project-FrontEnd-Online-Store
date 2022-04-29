@@ -1,0 +1,25 @@
+.cart_div {
+  align-items: center;
+  display: flex;
+  font-weight: 600;
+  margin: 1.5rem;
+}
+
+.empty_cart_div {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.empty_cart_img {
+  height: 500px;
+  margin-bottom: 1rem;
+}
+
+.empty_cart_div p {
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding-left: 6rem;
+  text-transform: uppercase;
+}

@@ -1,149 +1,127 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import {
-  getCategories,
-  getProductsFromQuery,
-  getProductsFromCategory,
-} from '../../services/api';
-import './Home.css';
+import { ReactComponent as CartSVG } from '../../images/cart.svg';
+import { getCategories, getProductsFromCategoryAndQuery } from '../../services/api';
+import CategoriesList from '../../Components/CategoriesList';
 import Product from '../../Components/Product';
-import Loading from '../../Components/Loading';
 
 class Home extends Component {
   constructor() {
     super();
     this.state = {
-      categories: [],
-      querySearch: '',
       products: [],
       searchMade: false,
+      searchQuery: '',
+      categories: [],
     };
   }
 
   componentDidMount() {
-    this.fetchCategories();
+    this.fetchProducts();
   }
 
-  fetchCategories = async () => {
-    const categoriesObj = await getCategories();
-    this.setState({
-      categories: categoriesObj,
-    });
-  };
-
   fetchProducts = async () => {
-    const { querySearch } = this.state;
-    const productsObj = await getProductsFromQuery(querySearch);
-    this.setState({ products: productsObj, searchMade: true });
+    const categories = await getCategories();
+    this.setState({ categories });
   };
 
   handleInputChange = ({ target }) => {
-    const { value, name } = target;
-    this.setState({
-      [name]: value,
+    this.setState({ searchQuery: target.value });
+  };
+
+  searchProducts = async () => {
+    const { searchQuery } = this.state;
+    this.removeHighlight();
+    const products = await getProductsFromCategoryAndQuery('', searchQuery);
+    this.setState({ products, searchMade: true });
+  };
+
+  highlightCategoryClicked = (id) => {
+    const { categories } = this.state;
+    const categoryName = categories.find(({ id: categoryId }) => categoryId === id).name;
+    const categoriesElements = Array.from(document.querySelectorAll('.categorie_item'));
+
+    categoriesElements.forEach((category) => {
+      const { textContent } = category;
+      if (textContent === categoryName) category.classList.add('active');
+      else category.classList.remove('active');
     });
   };
 
-  handleSearchClick = () => {
-    this.fetchProducts();
+  removeHighlight = () => {
+    const categoriesElements = Array.from(document.querySelectorAll('.categorie_item'));
+    categoriesElements.forEach((category) => category.classList.remove('active'));
   };
 
-  searchByCategory = async ({ target }) => {
-    const { id } = target;
-    const productsObj = await getProductsFromCategory(id);
-    this.setState({ products: productsObj, searchMade: true });
+  searchByCategories = async (id) => {
+    this.highlightCategoryClicked(id);
+    const products = await getProductsFromCategoryAndQuery(id, '');
+    this.setState({ products, searchMade: true });
   };
 
   renderProducts = () => {
     const { products } = this.state;
-    const { addToCart } = this.props;
-    if (!products) return <Loading />;
 
-    if (products.length === 0) return <p>Nenhum Produto foi Encontrado</p>;
-
-    return products.map((product) => (
-      <div key={ product.id } data-testid="product">
-        <Product
-          id={ product.id }
-          title={ product.title }
-          price={ product.price }
-          thumbnail={ product.thumbnail }
-          addToCart={ addToCart }
-          homeCall="home"
-        />
-        <Link to={ `/product/${product.id}` } data-testid="product-detail-link">
-          Ver detalhes do produto
-        </Link>
-      </div>
-    ));
-  };
-
-  renderCategories = () => {
-    const { categories } = this.state;
-    if (!categories) return <Loading />;
-
-    return categories.map(({ name, id }, i) => (
-      <li key={ i }>
-        <button
-          id={ id }
-          data-testid="category"
-          type="button"
-          className="btn_categories"
-          onClick={ this.searchByCategory }
-        >
-          {name}
-        </button>
-      </li>
+    return products.map(({ id, thumbnail, title, price }) => (
+      <Product
+        key={ id }
+        id={ id }
+        thumbnail={ thumbnail }
+        title={ title }
+        price={ price }
+      />
     ));
   };
 
   render() {
-    const { querySearch, searchMade, cartProducts } = this.state;
+    const { categories, searchMade, products } = this.state;
     return (
-      <section className="home_section">
-        <header className="home_header">
+      <section className="home_page">
+        <div className="home_search_div">
+          <div>
+            <input
+              data-testid="query-input"
+              type="text"
+              name="searchQuery"
+              placeholder="Procure um item"
+              onChange={ this.handleInputChange }
+            />
+            <button
+              data-testid="query-button"
+              type="button"
+              className="btn_search"
+              onClick={ this.searchProducts }
+            >
+              Pesquisar
+            </button>
+            <Link to="/cart" data-testid="shopping-cart-button" className="btn_cart">
+              <CartSVG className="cart_img" />
+            </Link>
+          </div>
           {!searchMade && (
-            <h2 data-testid="home-initial-message">
+            <h2 data-testid="home-initial-message" className="home_initial_message">
               Digite algum termo de pesquisa ou escolha uma categoria.
             </h2>
           )}
-          <input
-            onChange={ this.handleInputChange }
-            type="text"
-            name="querySearch"
-            id="querySearch"
-            value={ querySearch }
-            data-testid="query-input"
-          />
-          <button
-            type="button"
-            data-testid="query-button"
-            onClick={ this.handleSearchClick }
-          >
-            Pesquisar
-          </button>
-          <Link
-            to={ {
-              pathname: '/shopping-cart',
-              state: { cartProducts },
-            } }
-            data-testid="shopping-cart-button"
-          >
-            Carrinho De Compras
-          </Link>
-        </header>
-        <ul className="categories">{this.renderCategories()}</ul>
-        <section className="products_section">
-          {searchMade && this.renderProducts()}
-        </section>
+        </div>
+        <div className="categories_div">
+          <h2 className="categories_title">Categorias:</h2>
+          <div className="categories_list">
+            <CategoriesList
+              categories={ categories }
+              searchByCategories={ this.searchByCategories }
+            />
+          </div>
+        </div>
+        <div className="products_div">
+          {searchMade && products.length === 0 && (
+            <p className="no_products_message">Nenhum produto foi encontrado</p>
+          )}
+          {products.length > 0 && this.renderProducts()}
+        </div>
       </section>
     );
   }
 }
-
-Home.propTypes = {
-  addToCart: PropTypes.func.isRequired,
-};
 
 export default Home;
