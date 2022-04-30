@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 
 class Loading extends Component {
   render() {
-    return (
-      <div className="loading">
-        <h2>Loading...</h2>
-      </div>
-    );
+    return <h1>Loading...</h1>;
   }
 }
 
