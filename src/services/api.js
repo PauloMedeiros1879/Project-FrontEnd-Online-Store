@@ -15,14 +15,14 @@ async function getProductsFromCategoryAndQuery(CATEGORY_ID, QUERY) {
         `https://api.mercadolibre.com/sites/MLB/search?category=${CATEGORY_ID}`,
       );
       const products = await response.json();
-      return products.results;
+      return products;
     }
 
     const response = await fetch(
       `https://api.mercadolibre.com/sites/MLB/search?q=${QUERY}`,
     );
     const products = await response.json();
-    return products.results;
+    return products;
   } catch (error) {
     console.log(error);
   }

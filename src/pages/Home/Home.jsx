@@ -33,7 +33,7 @@ class Home extends Component {
     const { searchQuery } = this.state;
     this.removeHighlight();
     const products = await getProductsFromCategoryAndQuery('', searchQuery);
-    this.setState({ products, searchMade: true });
+    this.setState({ products: products.results, searchMade: true });
   };
 
   highlightCategoryClicked = (id) => {
@@ -56,20 +56,14 @@ class Home extends Component {
   searchByCategories = async (id) => {
     this.highlightCategoryClicked(id);
     const products = await getProductsFromCategoryAndQuery(id, '');
-    this.setState({ products, searchMade: true });
+    this.setState({ products: products.results, searchMade: true });
   };
 
   renderProducts = () => {
     const { products } = this.state;
 
     return products.map(({ id, thumbnail, title, price }) => (
-      <Product
-        key={ id }
-        id={ id }
-        thumbnail={ thumbnail }
-        title={ title }
-        price={ price }
-      />
+      <Product key={ id } id={ id } thumbnail={ thumbnail } title={ title } price={ price } />
     ));
   };
 
