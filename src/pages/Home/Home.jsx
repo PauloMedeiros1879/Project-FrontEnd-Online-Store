@@ -63,7 +63,13 @@ class Home extends Component {
     const { products } = this.state;
 
     return products.map(({ id, thumbnail, title, price }) => (
-      <Product key={ id } id={ id } thumbnail={ thumbnail } title={ title } price={ price } />
+      <Product
+        key={ id }
+        id={ id }
+        thumbnail={ thumbnail }
+        title={ title }
+        price={ price }
+      />
     ));
   };
 
