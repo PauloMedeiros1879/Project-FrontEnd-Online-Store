@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -49,7 +48,9 @@ class CheckoutForm extends Component {
   };
 
   render() {
-    const { name, cpf, email, address, city, cep, phone, number, handleChange } = this.props;
+    const {
+      name, cpf, email, address, city, cep, phone, number, handleChange,
+    } = this.props;
 
     return (
       <form className="checkout_form">

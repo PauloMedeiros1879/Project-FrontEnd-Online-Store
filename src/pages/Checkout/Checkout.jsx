@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as CartSVG } from '../../images/cart.svg';
@@ -67,7 +66,9 @@ class Checkout extends Component {
   };
 
   render() {
-    const { name, email, address, city, state, cep, phone, cpf, number, payment } = this.state;
+    const {
+      name, email, address, city, state, cep, phone, cpf, number, payment,
+    } = this.state;
 
     const totalProducts = getCartFromStorage().reduce(
       (total, { quantity }) => quantity + total,

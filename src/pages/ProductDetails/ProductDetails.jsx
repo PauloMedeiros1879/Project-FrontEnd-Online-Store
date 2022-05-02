@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -80,7 +79,9 @@ class ProductDetails extends Component {
   };
 
   render() {
-    const { product, rating, evaluation, email, productRatings, isRatingButtonEnabled } = this.state;
+    const {
+      product, rating, evaluation, email, productRatings, isRatingButtonEnabled,
+    } = this.state;
 
     const totalProducts = getCartFromStorage().reduce(
       (total, { quantity }) => quantity + total,
