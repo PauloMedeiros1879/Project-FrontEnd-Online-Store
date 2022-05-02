@@ -1,11 +1,7 @@
-/* stylelint-disable declaration-block-no-redundant-longhand-properties */
-
-/* stylelint-disable declaration-colon-space-after */
 .home_page {
   display: grid;
   gap: 0.5rem 0.5rem;
-  grid-template-areas:
-    'categories-list cart-search cart-search'
+  grid-template-areas: 'categories-list cart-search cart-search'
     'categories-list products-list products-list'
     'categories-list products-list products-list';
 }
@@ -130,7 +126,7 @@
   border: 1px solid black;
   border-radius: 50px;
   color: black;
-  display:flex;
+  display: flex;
   font-weight: 800;
   height: 15px;
   justify-content: center;
