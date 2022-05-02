@@ -1,7 +1,9 @@
+/* eslint-disable max-len */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as CartSVG } from '../../images/cart.svg';
 import { getCategories, getProductsFromCategoryAndQuery } from '../../services/api';
+import { getCartFromStorage } from '../../services/cartManager';
 import CategoriesList from '../../Components/CategoriesList';
 import Product from '../../Components/Product';
 
@@ -69,15 +71,26 @@ class Home extends Component {
         thumbnail={ thumbnail }
         title={ title }
         price={ price }
+        updateScreen={ this.updateScreen }
       />
     ));
   };
 
+  updateScreen = () => {
+    this.forceUpdate();
+  };
+
   render() {
     const { categories, searchMade, products } = this.state;
+
+    const totalProducts = getCartFromStorage().reduce(
+      (total, { quantity }) => quantity + total,
+      0,
+    );
+
     return (
       <section className="home_page">
-        <div className="home_search_div">
+        <header className="home_search_div">
           <div>
             <input
               data-testid="query-input"
@@ -94,16 +107,19 @@ class Home extends Component {
             >
               Pesquisar
             </button>
-            <Link to="/cart" data-testid="shopping-cart-button" className="btn_cart">
+            <Link to="/cart" data-testid="shopping-cart-button" className="link_cart">
               <CartSVG className="cart_img" />
             </Link>
+            <span data-testid="shopping-cart-size" className="total_cart">
+              {totalProducts}
+            </span>
           </div>
           {!searchMade && (
             <h2 data-testid="home-initial-message" className="home_initial_message">
               Digite algum termo de pesquisa ou escolha uma categoria.
             </h2>
           )}
-        </div>
+        </header>
         <div className="categories_div">
           <h2 className="categories_title">Categorias:</h2>
           <div className="categories_list">

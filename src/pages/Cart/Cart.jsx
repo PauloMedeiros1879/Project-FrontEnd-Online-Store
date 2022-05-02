@@ -53,13 +53,18 @@ class Cart extends Component {
       0,
     );
 
+    const totalProducts = getCartFromStorage().reduce(
+      (acc, { quantity }) => quantity + acc,
+      0,
+    );
+
     return (
       <section className="cart_page">
         <header className="cart_header">
-          <div>
+          <Link to="/cart">
             <CartSVG className="btn_cart " />
-            <span> Carrinho de Compras</span>
-          </div>
+          </Link>
+          <span className="total_cart">{totalProducts}</span>
           <Link to="/" className="link_home">
             <HomeSVG className="cart_img_products_details" />
           </Link>
@@ -73,9 +78,13 @@ class Cart extends Component {
               {' '}
               {`R$${total.toFixed(2)}`}
             </p>
-            <button type="button" className="btn_finish_purchase">
+            <Link
+              to="/checkout"
+              data-testid="checkout-products"
+              className="link_checkout"
+            >
               Finalizar Compra
-            </button>
+            </Link>
           </div>
         )}
       </section>

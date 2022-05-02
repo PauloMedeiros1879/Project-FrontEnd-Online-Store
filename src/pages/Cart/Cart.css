@@ -85,3 +85,34 @@
 .cart_finish_purchase span {
   font-weight: 800;
 }
+
+.link_checkout {
+  align-items: center;
+  background-color: lightblue;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: black;
+  display: flex;
+  font-weight: 800;
+  height: 20px;
+  justify-content: center;
+  padding: 0.5rem;
+  text-decoration: none;
+}
+
+
+.total_cart_details {
+  background-color: yellow;
+  border: 1px solid black;
+  border-radius: 50px;
+  color: black;
+  font-weight: 800;
+  height: 30px;
+  left: -20px;
+  padding: 0.5rem;
+  position: relative;
+  text-decoration: none;
+  top: -5px;
+  width: 30px;
+  z-index: 2;
+}

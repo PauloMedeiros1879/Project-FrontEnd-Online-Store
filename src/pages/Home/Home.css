@@ -1,10 +1,13 @@
+/* stylelint-disable declaration-block-no-redundant-longhand-properties */
+
+/* stylelint-disable declaration-colon-space-after */
 .home_page {
   display: grid;
   gap: 0.5rem 0.5rem;
-  grid-template: 'categories-list cart-search cart-search'
+  grid-template-areas:
+    'categories-list cart-search cart-search'
     'categories-list products-list products-list'
     'categories-list products-list products-list';
-  height: 100vh;
 }
 
 .home_search_div {
@@ -119,4 +122,26 @@
 
 .active {
   color: red;
+}
+
+.total_cart {
+  align-items: center;
+  background-color: yellow;
+  border: 1px solid black;
+  border-radius: 50px;
+  color: black;
+  display:flex;
+  font-weight: 800;
+  height: 15px;
+  justify-content: center;
+  left: -25px;
+  padding: 0.5rem;
+  position: relative;
+  top: 10px;
+  width: 15px;
+  z-index: 2;
+}
+
+.link_cart {
+  text-decoration: none;
 }

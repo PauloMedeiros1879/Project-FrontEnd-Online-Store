@@ -1,0 +1,125 @@
+.checkout_header {
+  align-items: center;
+  display: flex;
+  font-weight: 600;
+  margin: 1.5rem;
+}
+
+.checkout_header a {
+  align-items: center;
+  color: black;
+  display: flex;
+  text-decoration: none;
+}
+
+.checkout_header .link_home {
+  margin-left: auto;
+}
+
+.checkout_products_section {
+  border: 1px solid black;
+  box-shadow: black 2px 2px 8px 1px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 80%;
+}
+
+.checkout_products_section h2, .checkout_form h1, .pay_method_section h2 {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.checkout_product_item {
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  margin: 0.5rem auto;
+  width: 80%;
+}
+
+.checkout_product_item img {
+  width: 50px;
+}
+
+.checkout_product_item span {
+  margin: 0 0.5rem;
+}
+
+.checkout_total {
+  margin: 0.5rem auto;
+  width: 80%;
+}
+
+.buyer_info_section {
+  border: 1px solid black;
+  box-shadow: black 2px 2px 8px 1px;
+  margin: 1.5rem auto;
+  width: 80%;
+}
+
+.checkout_form {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+}
+
+.checkout_form div {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.checkout_form input, select {
+  background-color: white;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  width: 25%;
+}
+
+.pay_method_section {
+  border: 1px solid black;
+  box-shadow: black 2px 2px 8px 1px;
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem auto;
+  width: 80%;
+}
+
+.pay_method_img {
+  height: 70px;
+  width: 70px;
+}
+
+.pay_method_item {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0.5rem auto;
+  width: 80%;
+}
+
+.pay_method_item h3 {
+  display: block;
+}
+
+.pay_method_item label {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.checkout_page button {
+  background-color: green;
+  border: 1px solid black;
+  box-shadow: black 2px 2px 8px 1px;
+  color: white;
+  display: flex;
+  font-size: 1.5rem;
+  justify-content: center;
+  margin: 1.5rem auto;
+  padding: 0.5rem;
+  width: 80%;
+}
