@@ -88,8 +88,6 @@ class ProductDetails extends Component {
       0,
     );
 
-    if (!product) return null;
-    const { id, thumbnail, title, price, attributes } = product;
     return (
       <section className="product_details_page">
         <header>
@@ -105,11 +103,11 @@ class ProductDetails extends Component {
         </header>
         {product && (
           <ProductInfo
-            id={ id }
-            thumbnail={ thumbnail }
-            title={ title }
-            price={ price }
-            attributes={ attributes }
+            id={ product.id }
+            thumbnail={ product.thumbnail }
+            title={ product.title }
+            price={ product.price }
+            attributes={ product.attributes }
             rating={ rating }
             updateRating={ this.updateRating }
             handleInputChange={ this.inputHandleChange }
