@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/app-toot-name/static/css/main.5cc0da02.chunk.css",
+    "main.js": "/app-toot-name/static/js/main.4e225b45.chunk.js",
+    "main.js.map": "/app-toot-name/static/js/main.4e225b45.chunk.js.map",
+    "runtime-main.js": "/app-toot-name/static/js/runtime-main.946983d5.js",
+    "runtime-main.js.map": "/app-toot-name/static/js/runtime-main.946983d5.js.map",
+    "static/js/2.16a647cf.chunk.js": "/app-toot-name/static/js/2.16a647cf.chunk.js",
+    "static/js/2.16a647cf.chunk.js.map": "/app-toot-name/static/js/2.16a647cf.chunk.js.map",
+    "index.html": "/app-toot-name/index.html",
+    "precache-manifest.6a57a8754993d0f04cad4683f3ab4a65.js": "/app-toot-name/precache-manifest.6a57a8754993d0f04cad4683f3ab4a65.js",
+    "service-worker.js": "/app-toot-name/service-worker.js",
+    "static/css/main.5cc0da02.chunk.css.map": "/app-toot-name/static/css/main.5cc0da02.chunk.css.map",
+    "static/js/2.16a647cf.chunk.js.LICENSE.txt": "/app-toot-name/static/js/2.16a647cf.chunk.js.LICENSE.txt",
+    "static/media/bank-card.18cdcc1e.svg": "/app-toot-name/static/media/bank-card.18cdcc1e.svg",
+    "static/media/cart.2dbea7bb.svg": "/app-toot-name/static/media/cart.2dbea7bb.svg",
+    "static/media/empty-cart.cdedd077.svg": "/app-toot-name/static/media/empty-cart.cdedd077.svg",
+    "static/media/home.5db86616.svg": "/app-toot-name/static/media/home.5db86616.svg",
+    "static/media/mastercard.52310e51.svg": "/app-toot-name/static/media/mastercard.52310e51.svg",
+    "static/media/star.baa95d58.svg": "/app-toot-name/static/media/star.baa95d58.svg",
+    "static/media/star_colored.859d7240.svg": "/app-toot-name/static/media/star_colored.859d7240.svg",
+    "static/media/visa.87ded0e7.svg": "/app-toot-name/static/media/visa.87ded0e7.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.946983d5.js",
+    "static/js/2.16a647cf.chunk.js",
+    "static/css/main.5cc0da02.chunk.css",
+    "static/js/main.4e225b45.chunk.js"
+  ]
+}
